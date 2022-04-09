@@ -1,6 +1,6 @@
 package ar.edu.unahur.obj2.ejemplo
 
-interface Planta {
+interface Planta{
     val anioObtencion: Int
     val altura: Double
 
