@@ -4,7 +4,7 @@ class Parcela(
     override val ancho: Double,
     override val largo: Double,
     override val horasSolRecibidas: Int,
-    override val plantadas: MutableCollection<Planta> = mutableListOf()
+    override val plantadas: MutableCollection<PlantaInterfaz> = mutableListOf()
 ):ParcelaInterfaz{
 
     override fun superficie(): Double {
@@ -15,10 +15,10 @@ class Parcela(
     }
 
     override fun tieneComplicaciones(): Boolean {
-        return this.plantadas.all{ p: Planta -> p.horasDeSolToleradas() < this.horasSolRecibidas}
+        return this.plantadas.all{ p: PlantaInterfaz -> p.horasDeSolToleradas() < this.horasSolRecibidas}
     }
 
-    override fun plantar(planta:Planta){
+    override fun plantar(planta:PlantaInterfaz){
         if (this.sePuedePlantar()){
             this.plantadas.add(planta)
         }else{
