@@ -11,5 +11,6 @@ interface Planta{
     fun daSemillas(): Boolean {
         return this.esFuerte() || this.condicionAdicional()
     }
+    fun parcelaIdeal(parcela: Parcela) : Boolean
 }
 
