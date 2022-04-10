@@ -1,11 +1,15 @@
 package ar.edu.unahur.obj2.ejemplo
 
-open class Menta(override val anioObtencion: Int, override val altura: Double) : PlantaInterfaz {
+open class Menta(override val anioObtencion: Int, override val altura: Double) : PlantaInterfaz{
     override fun espacio(): Double{
         return this.altura + 1
     }
     override fun condicionAdicional(): Boolean {
         return this.altura >0.4
+    }
+
+    override fun parcelaIdeal(parcela: Parcela): Boolean {
+        return parcela.superficie() > 6
     }
 }
 
@@ -26,6 +30,9 @@ open class Soja(override val anioObtencion: Int, override val altura: Double) : 
         }
          return tolerancia
     }
+    override fun parcelaIdeal(parcela: Parcela): Boolean {
+        return parcela.horasSolRecibidas == this.horasDeSolToleradas()
+    }
 }
 
 class Quinoa(override val anioObtencion: Int, override val altura: Double, val espacio: Double) : PlantaInterfaz{
@@ -42,12 +49,18 @@ class Quinoa(override val anioObtencion: Int, override val altura: Double, val e
     override fun condicionAdicional(): Boolean {
         return this.anioObtencion in 2001..2008
     }
+    override fun parcelaIdeal(parcela: Parcela): Boolean {
+        return parcela.plantadas.all{p: PlantaInterfaz -> p.altura < 1.5 }
+    }
 }
 
 //Variedades
 
 class SojaTrangenica(anioObtencion: Int, altura: Double): Soja(anioObtencion, altura){
     override fun daSemillas() = false
+    override fun parcelaIdeal(parcela: Parcela): Boolean {
+        return parcela.cantidadMaxima() == 1
+    }
 }
 
 class Peperina(anioObtencion: Int, altura: Double) : Menta(anioObtencion, altura){
