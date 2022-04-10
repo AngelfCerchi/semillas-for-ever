@@ -1,6 +1,6 @@
 package ar.edu.unahur.obj2.ejemplo
 
-open class Menta(override val anioObtencion: Int, override val altura: Double) : Planta {
+open class Menta(override val anioObtencion: Int, override val altura: Double) : PlantaInterfaz {
     override fun espacio(): Double{
         return this.altura + 1
     }
@@ -9,7 +9,7 @@ open class Menta(override val anioObtencion: Int, override val altura: Double) :
     }
 }
 
-open class Soja(override val anioObtencion: Int, override val altura: Double) : Planta{
+open class Soja(override val anioObtencion: Int, override val altura: Double) : PlantaInterfaz{
     override fun espacio(): Double {
         return this.altura/2
     }
@@ -28,7 +28,7 @@ open class Soja(override val anioObtencion: Int, override val altura: Double) : 
     }
 }
 
-class Quinoa(override val anioObtencion: Int, override val altura: Double, val espacio: Double) : Planta{
+class Quinoa(override val anioObtencion: Int, override val altura: Double, val espacio: Double) : PlantaInterfaz{
     override fun horasDeSolToleradas(): Int {
         val tolerancia: Int = if (this.altura < 0.3){
             10
