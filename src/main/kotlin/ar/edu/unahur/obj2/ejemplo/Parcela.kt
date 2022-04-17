@@ -1,6 +1,6 @@
 package ar.edu.unahur.obj2.ejemplo
 
-class Parcela(
+open class Parcela(
     override val ancho: Double,
     override val largo: Double,
     override val horasSolRecibidas: Int,
@@ -25,6 +25,24 @@ class Parcela(
             error("No se puede plantar")
         }
     }
+}
 
+class ParcelasEcologicas (
+    ancho: Double,
+    largo: Double,
+    horasSolRecibidas: Int,
+    plantadas: MutableCollection<PlantaInterfaz> = mutableListOf()
+): Parcela(ancho, largo, horasSolRecibidas, plantadas) {
+    fun seAsociaBien(planta: PlantaInterfaz) = !this.tieneComplicaciones() and planta.parcelaIdeal(this)
+}
+
+class ParcelasIdustriales (
+    ancho: Double,
+    largo: Double,
+    horasSolRecibidas: Int,
+    plantadas: MutableCollection<PlantaInterfaz> = mutableListOf()
+): Parcela(ancho, largo, horasSolRecibidas, plantadas) {
+    fun seAsociaBien(planta: PlantaInterfaz) = (this.cantidadMaxima() == 2) and planta.esFuerte()
 
 }
+
