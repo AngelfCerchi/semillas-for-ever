@@ -36,13 +36,14 @@ class ParcelasEcologicas (
     fun seAsociaBien(planta: PlantaInterfaz) = !this.tieneComplicaciones() and planta.parcelaIdeal(this)
 }
 
-class ParcelasIdustriales (
+class ParcelasIndustriales (
     ancho: Double,
     largo: Double,
     horasSolRecibidas: Int,
     plantadas: MutableCollection<PlantaInterfaz> = mutableListOf()
 ): Parcela(ancho, largo, horasSolRecibidas, plantadas) {
-    fun seAsociaBien(planta: PlantaInterfaz) = (this.cantidadMaxima() == 2) and planta.esFuerte()
+    fun seAsociaBien(planta: PlantaInterfaz) = (this.cantidadMaxima() <= 2) and planta.esFuerte()
 
 }
+
 
