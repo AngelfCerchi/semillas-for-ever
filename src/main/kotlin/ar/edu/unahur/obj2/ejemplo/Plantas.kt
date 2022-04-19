@@ -1,19 +1,33 @@
 package ar.edu.unahur.obj2.ejemplo
 
-open class Menta(override val anioObtencion: Int, override val altura: Double) : PlantaInterfaz{
+abstract class Planta(val anioObtencion: Int, val altura: Double){
+
+    open fun horasDeSolToleradas() = 7
+     fun esFuerte() = this.horasDeSolToleradas() >= 9
+
+    open fun daSemillas(): Boolean {
+        return this.esFuerte() || this.condicionAdicional()
+    }
+    abstract fun parcelaIdeal(parcela: Parcela) : Boolean
+
+    abstract fun espacio(): Double
+    abstract fun condicionAdicional(): Boolean
+
+
+}
+open class Menta(anioObtencion: Int, altura: Double) : Planta(anioObtencion, altura) {
     override fun espacio(): Double{
         return this.altura + 1
     }
     override fun condicionAdicional(): Boolean {
         return this.altura >0.4
     }
-
     override fun parcelaIdeal(parcela: Parcela): Boolean {
         return parcela.superficie() > 6
     }
 }
 
-open class Soja(override val anioObtencion: Int, override val altura: Double) : PlantaInterfaz{
+open class Soja(anioObtencion: Int, altura: Double) : Planta(anioObtencion, altura){
     override fun espacio(): Double {
         return this.altura/2
     }
@@ -35,7 +49,7 @@ open class Soja(override val anioObtencion: Int, override val altura: Double) : 
     }
 }
 
-class Quinoa(override val anioObtencion: Int, override val altura: Double, val espacio: Double) : PlantaInterfaz{
+class Quinoa(anioObtencion: Int, altura: Double, val espacio: Double) : Planta(anioObtencion, altura){
     override fun horasDeSolToleradas(): Int {
         val tolerancia: Int = if (this.altura < 0.3){
             10
@@ -50,13 +64,13 @@ class Quinoa(override val anioObtencion: Int, override val altura: Double, val e
         return this.anioObtencion in 2001..2008
     }
     override fun parcelaIdeal(parcela: Parcela): Boolean {
-        return parcela.plantadas.all{p: PlantaInterfaz -> p.altura < 1.5 }
+        return parcela.plantadas.all{p: Planta -> p.altura < 1.5 }
     }
 }
 
 //Variedades
 
-class SojaTrangenica(anioObtencion: Int, altura: Double): Soja(anioObtencion, altura){
+class SojaTrangenica(anioObtencion: Int, altura: Double): Soja(anioObtencion,altura){
     override fun daSemillas() = false
     override fun parcelaIdeal(parcela: Parcela): Boolean {
         return parcela.cantidadMaxima() == 1
