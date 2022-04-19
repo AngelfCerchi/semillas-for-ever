@@ -1,6 +1,6 @@
 package ar.edu.unahur.obj2.ejemplo
 
-abstract class Parcela(
+open class Parcela(
     val ancho: Double,
     val largo: Double,
     val horasSolRecibidas: Int,
@@ -27,8 +27,10 @@ abstract class Parcela(
             error("No se puede plantar")
         }
     }
-    abstract fun seAsociaBien(planta: Planta) : Boolean
-    abstract fun porcentajeBienAsociada(): Double
+    open fun seAsociaBien(planta: Planta): Boolean {
+        return planta.parcelaIdeal(this)
+    }
+    open fun porcentajeBienAsociada(): Double =  ((this.plantadas.count{ p -> this.seAsociaBien(p)} * 100) / this.plantadas.size).toDouble()
 
 
 }
@@ -40,7 +42,7 @@ open class ParcelasEcologicas (
 ): Parcela(ancho, largo, horasSolRecibidas) {
 
     override fun seAsociaBien(planta: Planta) = !this.tieneComplicaciones() and planta.parcelaIdeal(this)
-    override fun porcentajeBienAsociada(): Double =  ((this.plantadas.count{ p -> this.seAsociaBien(p)} * 100) / this.plantadas.size).toDouble()
+    //override fun porcentajeBienAsociada(): Double =  ((this.plantadas.count{ p -> this.seAsociaBien(p)} * 100) / this.plantadas.size).toDouble()
 
 
 }
@@ -52,7 +54,7 @@ class ParcelasIndustriales (
   ): Parcela(ancho, largo, horasSolRecibidas) {
 
     override fun seAsociaBien(planta: Planta) = (this.cantidadMaxima() <= 2) and planta.esFuerte()
-    override fun porcentajeBienAsociada(): Double =  ((this.plantadas.count{ p -> this.seAsociaBien(p)} * 100) / this.plantadas.size).toDouble()
+    //override fun porcentajeBienAsociada(): Double =  ((this.plantadas.count{ p -> this.seAsociaBien(p)} * 100) / this.plantadas.size).toDouble()
 
 }
 
